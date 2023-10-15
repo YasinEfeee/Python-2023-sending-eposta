@@ -1,7 +1,3 @@
-https://www.youtube.com/watch?v=vywH4vHt8R0&list=PLWctyKyPphPiul3WbHkniANLqSheBVP3O&index=47
-Bu videoyu 2023 de izleyenler için aşağıdaki kodu kendi bilgilerinize göre doldurup kullana bilirsiniz
-
-
 import smtplib
 import ssl
 import smtplib
@@ -54,6 +50,3 @@ try:
     print("E-posta başarıyla gönderildi.")
 except Exception as e:
         print("E-posta gönderme hatası:", str(e))
-
-Google güvenlik sebebiyle artık 2 faktoriyelli doğrulama istediği için bu şekilde yapmamız gerekiyor.
-not: mailPWD = "<2 faktoriyelli doğrulama açıtıktan sonra apppasswords bölümünden alacağınız kod>"
