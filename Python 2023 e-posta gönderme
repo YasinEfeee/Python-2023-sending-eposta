@@ -1,0 +1,59 @@
+https://www.youtube.com/watch?v=vywH4vHt8R0&list=PLWctyKyPphPiul3WbHkniANLqSheBVP3O&index=47
+Bu videoyu 2023 de izleyenler için aşağıdaki kodu kendi bilgilerinize göre doldurup kullana bilirsiniz
+
+
+import smtplib
+import ssl
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+import os
+
+os.chdir("C:\\Users\\<Kullanıcı>\\Desktop")
+
+# Bilgi kısmı:
+kullanici = "<e-posta adresiniz>"
+alici = kullanici
+mesaj = "Merhaba, bu bir test e-postasıdır."
+başlık = "PYTHON"
+mailPWD = "<2 faktoriyelli doğrulama açıtıktan sonra apppasswords bölümünden alacağınız kod>"
+
+# E-posta oluşturma
+posta = MIMEMultipart()
+posta["From"] = kullanici
+posta["To"] = kullanici
+# posta["To"] = [kullanici, kullanici2, "user@gmail.com"] --> birden fazla kişiye göndermek için
+posta["Subject"] = başlık
+
+
+# E-posta içeriği
+posta.attach(MIMEText(mesaj, "plain"))
+
+# Dosya ekleme
+dosyanın_ismi = "<Dosyaİsmi.???'>"
+with(open(dosyanın_ismi, "rb")) as dosyalar:
+    payload = MIMEBase("application", "octet-stream")
+    payload.set_payload(dosyalar.read())
+    encoders.encode_base64(payload)
+    
+    payload.add_header("Content-Disposition", "attachment; filename={}".format(dosyanın_ismi))
+
+    posta.attach(payload)
+    
+posta_ste = posta.as_string()
+    
+try:
+    eposta_sunucu = smtplib.SMTP('smtp.gmail.com:587')
+    eposta_sunucu.ehlo()
+    eposta_sunucu.starttls()
+    eposta_sunucu.login(kullanici, mailPWD)
+    eposta_sunucu.sendmail(kullanici, alici, posta_ste)
+    eposta_sunucu.quit()
+    print("E-posta başarıyla gönderildi.")
+except Exception as e:
+        print("E-posta gönderme hatası:", str(e))
+
+Google güvenlik sebebiyle artık 2 faktoriyelli doğrulama istediği için bu şekilde yapmamız gerekiyor.
+not: mailPWD = "<2 faktoriyelli doğrulama açıtıktan sonra apppasswords bölümünden alacağınız kod>"
